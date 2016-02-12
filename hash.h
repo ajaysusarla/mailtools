@@ -14,11 +14,26 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#ifndef _HASH_H_
+#define _HASH_H_
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
+#include <stdlib.h>
 
-#endif  /* _ENVIRONMENT_H_ */
+typedef struct _hashTable HashTable;
+typedef struct _hashEntry HashEntry;
+typedef struct _hashProps HashProps;
+
+struct _hashProps {
+        unsigned int (*hash_fn)(const void *key);
+        int (*key_cmp_fn)(const char *a, const char *b);
+
+        void *(*key_dup)(const void *key);
+        void *(*val_dup)(const void *val);
+
+        void (*key_free)(void *key);
+        void (*val_free)(void *val);
+};
+
+HashTable *ht_new(HashProps *props);
+
+#endif  /* _HASH_H_ */

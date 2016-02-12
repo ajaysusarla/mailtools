@@ -14,11 +14,15 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#ifndef _UTILS_H_
+#define _UTILS_H_
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
+#include <stdlib.h>
 
-#endif  /* _ENVIRONMENT_H_ */
+void *mt_malloc(size_t size);
+void *mt_calloc(size_t nmemb, size_t size);
+void mt_free(void *ptr);
+
+#define ENSURE_NON_NULL(p) p?p:""
+
+#endif  /* _UTILS_H_ */

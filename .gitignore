@@ -1,5 +1,5 @@
 *.o
-list-accounts
-*-test
+list-folders
+example-*
 *_flymake.*
 *.~

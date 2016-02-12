@@ -14,11 +14,37 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#include "net_socket.h"
+#include "net_ssl.h"
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdbool.h>
+#include <string.h>
 
-#endif  /* _ENVIRONMENT_H_ */
+#include <netinet/in.h>
+#include <netdb.h>
+
+
+#include <sys/socket.h>
+#include <sys/select.h>
+
+
+/* Raw Sockets */
+int net_socket_raw_open(Session *session, int use_ipv6)
+{
+        int sockfd;
+
+        struct addrinfo *res, *cur;
+        struct addrinfo hints;
+
+        memset(&hints, 0, sizeof(hints));
+
+        if (use_ipv6)
+                hints.ai_family = AF_UNSPEC;
+        else
+                hints.ai_family = AF_INET;
+
+        hints.ai_socktype = SOCK_STREAM;
+}

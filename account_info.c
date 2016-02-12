@@ -14,11 +14,24 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#include "account_info.h"
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
+#include <stdlib.h>
+#include <string.h>
 
-#endif  /* _ENVIRONMENT_H_ */
+int account_info_new(const char *username, int namelen,
+                     const char *server, int serverlen,
+                     const char *port, int portlen,
+                     AccountInfo **ainfo)
+{
+        if ( (username && *username) ||
+             (server && *server) ||
+             (port && *port)) {
+                *ainfo = (AccountInfo *) malloc(sizeof(AccountInfo *));
+                if (!*ainfo)
+                        return -1;
+
+                memset(*ainfo, 0, sizeof(**ainfo));
+
+        }
+}

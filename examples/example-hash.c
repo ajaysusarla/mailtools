@@ -14,11 +14,11 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#include "hash.h"
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
+int main(int argc, char **argv)
+{
+        HashTable *ht;
 
-#endif  /* _ENVIRONMENT_H_ */
+        return 0;
+}

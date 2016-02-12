@@ -14,11 +14,7 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#ifndef _NET_SSL_H_
+#define _NET_SSL_H_
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
-
-#endif  /* _ENVIRONMENT_H_ */
+#endif  /* _NET_SSL_H_ */

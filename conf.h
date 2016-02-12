@@ -13,10 +13,24 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 #ifndef _CONF_H_
 #define _CONF_H_
 
-struct config {
+
+enum _confType {
+        C_TYPE_INT,
+        C_TYPE_STRING,
+        C_TYPE_BOOL
 };
+
+struct _confEntry {
+        char *name;
+        char *val;
+        ConfType type;
+};
+
+typedef struct _confEntry ConfEntry;
+typedef enum _confType ConfType;
 
 #endif  /* _CONF_H_ */

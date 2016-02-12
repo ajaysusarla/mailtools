@@ -14,11 +14,22 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#ifndef _ACCOUNT_INFO_H_
+#define _ACCOUNT_INFO_H_
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
+#include <limits.h>
 
-#endif  /* _ENVIRONMENT_H_ */
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 255
+#endif
+
+struct _accountInfo {
+        char *username;
+        char *passwd;
+        char hostname[HOST_NAME_MAX];
+        unsigned short port;
+};
+
+typedef struct _accountInfo AccountInfo;
+
+#endif  /* _ACCOUNT_INFO_H_ */

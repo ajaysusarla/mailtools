@@ -14,11 +14,20 @@
  *
  */
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#ifndef _CONF_ACCOUNT_H_
+#define _CONF_ACCOUNT_H_
 
-#define DEFAULT_KIXMAIL_DIR "~/.kixmail"
-#define DEFAULT_KIXMAIL_ACCOUNTS_CONFIG "accounts"
-#define DEFAULT_KIMAIL_CONFIG "config"
+struct _configAccount {
+        char *name;
+        char *email;
 
-#endif  /* _ENVIRONMENT_H_ */
+        char *incoming_server_name;
+        char *outgoing_server_name;
+
+        unsigned short incoming_port;
+        unsigned short outgoing_port;
+};
+
+typedef struct _configAccount ConfigAccount;
+
+#endif  /* _CONF_ACCOUNT_H_ */
