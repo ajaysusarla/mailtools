@@ -1,0 +1,5 @@
+*.o
+list-accounts
+*-test
+*_flymake.*
+*.~
