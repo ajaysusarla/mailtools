@@ -3,3 +3,4 @@ list-folders
 example-*
 *_flymake.*
 *.~
+test-*
