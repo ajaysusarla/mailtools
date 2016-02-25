@@ -21,8 +21,6 @@
 #include <string.h>
 #include <limits.h>
 
-#define PRIME_MOD 2147483647
-
 struct _hashEntry {
         void *key;
         void *val;
@@ -181,20 +179,27 @@ static int ht_resize_if_needed(HashTable *ht)
 
 static int hash_table_get_index(HashTable *ht, void *key)
 {
-        unsigned int index = -1;
-        int hash;
+        unsigned int hash, index = -1, table;
+        HashEntry *e;
 
         if (ht_resize_if_needed(ht) != 0) {
                 return -1;
         }
 
         hash = ht->props->hash_fn(key);// & ht->table[1].sizemask;
-        
+
+        for (table = 0; table <= 1; table++) {
+                index = hash & ht->table[table].sizemask;
+                e = ht->table[table].entries[index];
+                while (e) {
+                        
+                }
+        }
 
         return index;
 }
 
-static HashEntry *hash_table_add_key(HashTable *ht, void *key)
+static HashEntry *hash_table_insert_key(HashTable *ht, void *key)
 {
         int index;
         HashEntry *e;
@@ -237,11 +242,11 @@ HashTable *ht_new(HashProps *props)
         return ht;
 }
 
-int ht_add(HashTable *ht, void *key, void *val)
+int ht_insert(HashTable *ht, void *key, void *val)
 {
         HashEntry *e;
 
-        e = hash_table_add_key(ht, key);
+        e = hash_table_insert_key(ht, key);
 
         if (!e)
                 return -1;

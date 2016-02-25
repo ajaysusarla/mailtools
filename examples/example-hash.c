@@ -12,13 +12,38 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
+ *
+ *  Example program to demonstrate hashing using the htable.[hc] in mailtools.
+ *
+ *
  */
 
-#include "hash.h"
+#include "htable.h"
 
-int main(int argc, char **argv)
+#include <stdio.h>
+#include <stdlib.h>
+
+HashProps hash_props_long = {
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL
+};
+
+int main(void)
 {
         HashTable *ht;
+
+        ht = ht_new(&hash_props_long);
+
+        if (ht == NULL) {
+                fprintf(stderr, "Error creating a hash table!\n");
+                exit(EXIT_FAILURE);
+        }
+
+        ht_free(ht);
 
         return 0;
 }

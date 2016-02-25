@@ -42,15 +42,23 @@ account-info: account_info.h account_info.c
 	$(CC) $(CFLAGS) -c account_info.c
 
 
-# hash
-hash: hash.h hash.c examples/example-hash.c utils
-	$(CC) $(CFLAGS) -c hash.c
+# hash table
+htable: htable.h htable.c examples/example-hash.c tests/test-hash.c utils
+	$(CC) $(CFLAGS) -c htable.c
+
 	$(CC) $(TEST_CFLAGS) -c examples/example-hash.c
 	$(CC) $(TEST_CFLAGS) $(LIBS) \
 		example-hash.o \
-		hash.o \
+		htable.o \
 		utils.o \
 		-o examples/example-hash
+
+	$(CC) $(TEST_CFLAGS) -c tests/test-hash.c
+	$(CC) $(TEST_CFLAGS) $(LIBS) \
+		test-hash.o \
+		htable.o \
+		utils.o \
+		-o tests/test-hash
 
 # config
 conf: conf.c conf.h examples/example-conf.c
@@ -65,10 +73,11 @@ utils: utils.h utils.c
 	$(CC) $(CFLAGS) -c utils.c
 
 clean:
-	rm -rf *.o \
+	rm -rf *.o core\
 		list-folders \
 		examples/example-conf \
-		examples/example-hash
+		examples/example-hash \
+		tests/test-hash
 
 .PHONY: check-syntax
 

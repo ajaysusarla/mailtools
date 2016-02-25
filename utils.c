@@ -57,10 +57,8 @@ void *mt_calloc(size_t nmemb, size_t size)
 
 void mt_free(void *ptr)
 {
-        void **tptr = (void **)ptr;
-
-        if (*tptr) {
-                free(*tptr);
-                *tptr = NULL;
+        if (ptr) {
+                free(ptr);
+                ptr = NULL;
         }
 }
