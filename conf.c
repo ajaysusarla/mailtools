@@ -38,11 +38,21 @@ static int _get_char(FILE *f)
 
 static int get_config_from_file(const char *filename, FILE *f)
 {
-        struct config cfg;
+        //struct config cfg;
         int comment = 0;
+        int c = _get_char(f);
 
+        while (c != EOF) {
+                printf("%c", c);
+                c = _get_char(f);
+        }
+
+#if 0
         for (;;) {
                 int c = _get_char(f);
+
+                if (c == EOF)
+                        return 0;
 
                 if (c == '\n') {
                         if (c == EOF)
@@ -59,16 +69,27 @@ static int get_config_from_file(const char *filename, FILE *f)
                         continue;
                 }
 
+                /*
                 if (c == '[') {
+                        continue;
+                }
+
+                if (c == ']') {
+                        continue;
                 }
 
                 if (!isalpha(c))
                         break;
+                */
+
+                printf("%c", c);
         }
 
         fprintf(stderr, "Bad config\n");
 
         return -1;
+#endif
+        return 0;
 }
 
 int get_config(const char *filename)
@@ -77,7 +98,7 @@ int get_config(const char *filename)
         FILE *f;
 
         if (filename == NULL || *filename == '\0')
-                filename = DEFAULT_KIXMAIL_CONFIG;
+                filename = "kixmailrc";
 
         f = fopen(filename, "r");
         if (f) {

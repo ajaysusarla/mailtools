@@ -63,9 +63,9 @@ htable: htable.h htable.c examples/example-hash.c tests/test-hash.c utils
 # config
 conf: conf.c conf.h examples/example-conf.c
 	$(CC) $(CFLAGS) -c conf.c
-	$(CC) $(CFLAGS) -c examples/example-conf.c
-	$(CC) $(CFLAGS) $(LIBS) \
-		conf-test.o \
+	$(CC) $(TEST_CFLAGS) -c examples/example-conf.c
+	$(CC) $(TEST_CFLAGS) $(LIBS) \
+		example-conf.o \
 		conf.o \
 		-o examples/example-conf
 
@@ -79,7 +79,7 @@ clean:
 		examples/example-hash \
 		tests/test-hash
 
-.PHONY: check-syntax
+.PHONY: check-syntax conf
 
 check-syntax:
 	$(CC) $(CFLAGS) -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)

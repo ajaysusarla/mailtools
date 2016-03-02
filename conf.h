@@ -18,19 +18,18 @@
 #define _CONF_H_
 
 
-enum _confType {
+typedef enum {
         C_TYPE_INT,
         C_TYPE_STRING,
         C_TYPE_BOOL
-};
+} confType;
 
 struct _confEntry {
         char *name;
         char *val;
-        ConfType type;
+        confType type;
 };
 
 typedef struct _confEntry ConfEntry;
-typedef enum _confType ConfType;
 
 #endif  /* _CONF_H_ */
