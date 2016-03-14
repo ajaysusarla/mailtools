@@ -31,12 +31,18 @@ list-folders: list-folders.c net net-ssl account-info
 		-o list-folders
 
 # network
-net: net_socket.h net_socket.c
-	$(CC) $(CFLAGS) -c net_socket.c
+net: net_tcp.h net_tcp.c
+	$(CC) $(CFLAGS) -c net_tcp.c
 
 net-ssl: net_ssl.h net_ssl.c
 	$(CC) $(CFLAGS) -c net_ssl.c
 
+net-example: net examples/example-net.c
+	$(CC) $(TEST_CFLAGS) -c examples/example-net.c
+	$(CC) $(TEST_CFLAGS) $(LIBS) \
+		net_tcp.o \
+		example-net.o \
+		-o examples/example-net
 # account-info
 account-info: account_info.h account_info.c
 	$(CC) $(CFLAGS) -c account_info.c
@@ -77,6 +83,7 @@ clean:
 		list-folders \
 		examples/example-conf \
 		examples/example-hash \
+		examples/example-net  \
 		tests/test-hash
 
 .PHONY: check-syntax conf

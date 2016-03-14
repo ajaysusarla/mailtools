@@ -14,37 +14,16 @@
  *
  */
 
-#include "net_socket.h"
-#include "net_ssl.h"
+#ifndef _NET_TCP_H_
+#define _NET_TCP_H_
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdbool.h>
-#include <string.h>
+#include "net.h"
 
-#include <netinet/in.h>
-#include <netdb.h>
+#include <stdio.h>
 
+int net_tcp_socket_open(char *addr, int port, int use_ipv6);
+int net_tcp_socket_close(int sockfd);
+int net_tcp_socket_read(int sockfd, char *buf, size_t len);
+int net_tcp_socket_write(int sockfd, const char *buf, size_t len);
 
-#include <sys/socket.h>
-#include <sys/select.h>
-
-
-/* Raw Sockets */
-int net_socket_raw_open(Session *session, int use_ipv6)
-{
-        int sockfd;
-
-        struct addrinfo *res, *cur;
-        struct addrinfo hints;
-
-        memset(&hints, 0, sizeof(hints));
-
-        if (use_ipv6)
-                hints.ai_family = AF_UNSPEC;
-        else
-                hints.ai_family = AF_INET;
-
-        hints.ai_socktype = SOCK_STREAM;
-}
+#endif  /* _NET_TCP_H_ */
