@@ -1,8 +1,22 @@
 CC = gcc
+PKGCONFIG=pkg-config
+NULL=
 
 CWD := $(shell pwd)
 # Platform
 UNAME := $(shell $(CC) -dumpmachine 2>&1 | grep -E -o "linux|darwin")
+
+## Silent by default
+V =
+ifeq ($(strip $(V)),)
+        E = @echo
+        Q = @
+else
+        E = @\#
+        Q =
+endif
+export E Q
+
 
 ifeq ($(UNAME), linux)
 OSFLAGS = -DLINUX
@@ -15,8 +29,21 @@ OSFLAGS = -DSOLARIS
 DEBUG = -g
 endif
 
-EXTRA_CFLAGS := -Wall -Wextra -pedantic
-LIBS :=
+# Dependencies
+OPENSSL_LIBS := $(shell $(PKGCONFIG) --libs openssl)
+OPENSSL_CFLAGS := $(shell $(PKGCONFIG) --cflags openssl)
+
+
+
+EXTRA_CFLAGS := \
+	-Wall -Wextra -pedantic \
+	$(OPENSSL_CFLAGS) \
+	$(NULL)
+
+LIBS := \
+	$(OPENSSL_LIBS) \
+	$(NULL)
+
 CFLAGS := $(DEBUG) $(EXTRA_CFLAGS) $(OSFLAGS)
 TEST_CFLAGS := $(CFLAGS) -I$(CWD)
 
@@ -26,7 +53,7 @@ list-folders: list-folders.c net net-ssl account-info
 	$(CC) $(CFLAGS) -c list-folders.c
 	$(CC) $(CFLAGS) $(LIBS) \
 		list-folders.o \
-		net_socket.o \
+		net_tcp.o \
 		account_info.o \
 		-o list-folders
 
@@ -49,9 +76,10 @@ account-info: account_info.h account_info.c
 
 
 # hash table
-htable: htable.h htable.c examples/example-hash.c tests/test-hash.c utils
+htable: htable.h htable.c utils
 	$(CC) $(CFLAGS) -c htable.c
 
+htable-example: htable examples/example-hash.c
 	$(CC) $(TEST_CFLAGS) -c examples/example-hash.c
 	$(CC) $(TEST_CFLAGS) $(LIBS) \
 		example-hash.o \
@@ -59,6 +87,7 @@ htable: htable.h htable.c examples/example-hash.c tests/test-hash.c utils
 		utils.o \
 		-o examples/example-hash
 
+htable-test: htable tests/test-hash.c
 	$(CC) $(TEST_CFLAGS) -c tests/test-hash.c
 	$(CC) $(TEST_CFLAGS) $(LIBS) \
 		test-hash.o \
@@ -67,8 +96,10 @@ htable: htable.h htable.c examples/example-hash.c tests/test-hash.c utils
 		-o tests/test-hash
 
 # config
-conf: conf.c conf.h examples/example-conf.c
+conf: conf.c conf.h
 	$(CC) $(CFLAGS) -c conf.c
+
+conf-example: conf examples/example-conf.c
 	$(CC) $(TEST_CFLAGS) -c examples/example-conf.c
 	$(CC) $(TEST_CFLAGS) $(LIBS) \
 		example-conf.o \
