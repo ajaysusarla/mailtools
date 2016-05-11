@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <locale.h>
 
 static int _get_char(FILE *f)
 {
@@ -40,14 +41,7 @@ static int get_config_from_file(const char *filename, FILE *f)
 {
         //struct config cfg;
         int comment = 0;
-        int c = _get_char(f);
 
-        while (c != EOF) {
-                printf("%c", c);
-                c = _get_char(f);
-        }
-
-#if 0
         for (;;) {
                 int c = _get_char(f);
 
@@ -58,6 +52,7 @@ static int get_config_from_file(const char *filename, FILE *f)
                         if (c == EOF)
                                 return 0;
                         comment = 0;
+                        printf("\n");
                         continue;
                 }
 
@@ -69,18 +64,23 @@ static int get_config_from_file(const char *filename, FILE *f)
                         continue;
                 }
 
-                /*
                 if (c == '[') {
+                        printf("Section name: ");
                         continue;
                 }
 
                 if (c == ']') {
+                        printf("\n");
                         continue;
                 }
 
-                if (!isalpha(c))
+                if (c == '=') {
+                }
+
+                if (!isprint(c)) {
+                        printf(">> %c\n", c);
                         break;
-                */
+                }
 
                 printf("%c", c);
         }
@@ -88,8 +88,6 @@ static int get_config_from_file(const char *filename, FILE *f)
         fprintf(stderr, "Bad config\n");
 
         return -1;
-#endif
-        return 0;
 }
 
 int get_config(const char *filename)
